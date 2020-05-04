@@ -17,6 +17,9 @@ As for the design for the HTML pages, I wasn't going for any particular style, I
 fields and play around with a gradient background :)
 
 As mentioned above, I was learning node.js at the time so all of the three apps are deployed on heroku:
+
 Euler Equation: https://murmuring-shelf-51306.herokuapp.com/
+
 2nd Order Linear Homogeneous ODE: https://polar-sands-48289.herokuapp.com/
+
 2x2 Linear ODE System: https://damp-earth-90167.herokuapp.com/
