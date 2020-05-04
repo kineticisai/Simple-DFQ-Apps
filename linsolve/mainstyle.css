@@ -1,0 +1,29 @@
+body {
+  background-color: rgb(71, 181, 229);
+  text-align: center;
+  margin: 0;
+}
+#header {
+  background: linear-gradient(rgb(244, 66, 66), rgb(71, 181, 229));
+  color: black;
+  overflow: hidden;
+  border: 1px;
+}
+h2 {
+  color: rgb(244, 66, 66);
+  transition-duration: 0.5s;
+}
+h2:hover {
+  color: rgb(71, 181, 229);
+}
+p {
+  color: black;
+  margin: 0px;
+  height: 50px;
+}
+#result {
+  border-radius: 20px;
+  background-color: rgb(247, 103, 103);
+  margin-right: 400px;
+  margin-left: 400px;
+}

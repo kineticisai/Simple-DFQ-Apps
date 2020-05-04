@@ -1,0 +1,56 @@
+<html>
+<head>
+  <title>DiffEQ Solve</title>
+  <link rel="stylesheet" type="text/css" href="mainstyle.css">
+</head>
+<div id="header">
+  <h1>DiffEQ Solve</h1>
+  <p>Tools for Change</p>
+</div>
+
+<h2>Euler Equation Tool</h2>
+
+<p>Enter the values of &#945; and &#946; for the Euler Differential Equation:<br>
+   L[y] = x<sup>2</sup>y'' + &#945;xy' + &#946;y = 0</p>
+<form>
+  <p>&#945; : <input type="text" id="a"> &#946; : <input type="text" id="b"></p>
+  <input type="button" id="but" value="submit">
+</form>
+<div id="result"></div>
+
+<script>
+  main();
+
+  function getElem(id){
+    return document.getElementById(id);
+  }
+
+  function main(){
+    let button = getElem('but');
+    button.onclick = solve;
+  }
+
+  function solve(){
+    let a = Number(getElem('a').value);
+    let b = Number(getElem('b').value);
+    let result = getElem('result');
+    let answer = '<p>The solution to the euler equation is: <br>'
+    if ((Math.pow((a-1),2)-4*b)>0){
+      let r1 = ((1-a) + Math.sqrt(Math.pow((a-1),2)-4*b))/2
+      let r2 = ((1-a) - Math.sqrt(Math.pow((a-1),2)-4*b))/2
+      answer += 'y = c<sub>1</sub>x<sup>'+r1+'</sup> + c<sub>2</sub>x<sup>'+r2+'</sup></p>'
+    } else if ((Math.pow((a-1),2)-4*b)<0){
+      let l = (a-1)/2
+      let u = Math.sqrt(Math.abs(Math.pow((a-1),2)-4*b))/2
+      answer += 'y = c<sub>1</sub>x<sup>'+l+'</sup>cos('+u+'lnx) + c<sub>2</sub>x<sup>'+l+'</sup>sin('+u+'lnx)'
+    } else {
+      let r = (1-a)/2
+      answer += 'y = (c<sub>1</sub> + c<sub>2</sub>lnx)x<sup>'+r+'</sup></p>'
+    }
+    result.innerHTML = answer;
+    result.innerHTML += '<style>#result {padding-bottom: 100px;}</style>'
+  }
+
+</script>
+
+</html>

@@ -1,0 +1,56 @@
+<html>
+<head>
+  <title>DiffEQ Solve</title>
+  <link rel="stylesheet" type="text/css" href="mainstyle.css">
+</head>
+<div id="header">
+  <h1>DiffEQ Solve</h1>
+  <p>Tools for Change</p>
+</div>
+
+<h2>Homogeneous Linear Differential Equation Solver</h2>
+
+<p>Enter the coefficients of the differential equation with the following form: <br>
+0 = ay'' + by' + cy</p>
+
+<form>
+  <p>a: &nbsp;<input type="text" id="a"> b: &nbsp;<input type="text" id="b"> c: &nbsp;<input type="text" id="c">
+  <input type="button" id="but" value="submit"></p>
+</form>
+<div id="result"></div>
+
+<script>
+  main();
+
+  function getElem(id){
+    return document.getElementById(id);
+  }
+
+  function main(){
+    let button = getElem('but');
+    button.onclick = solve;
+  }
+
+  function solve(){
+    let a = Number(getElem('a').value);
+    let b = Number(getElem('b').value);
+    let c = Number(getElem('c').value);
+    let r = -b/(2*a);
+    let u = (Math.sqrt(Math.abs(Math.pow(b,2) - 4*a*c)))/(2*a);
+    let result = getElem('result');
+    let answer = 'The solution to your differential equation is:<br>'
+
+    if (((Math.pow(b,2) - 4*a*c))>0){
+      let r1 = r + u;
+      let r2 = r - u;
+      answer += 'y = c<sub>1</sub>e<sup>'+r1+'t</sup> + c<sub>2</sub>e<sup>'+r2+'t</sup>'
+    } else if (((Math.pow(b,2) - 4*a*c))<0){
+      answer += 'y = c<sub>1</sub>e<sup>'+r+'t</sup>cos'+u+'t + c<sub>2</sub>e<sup>'+r+'t</sup>sin'+u+'t'
+    } else {
+      answer += 'y = c<sub>1</sub>e<sup>'+r+'t</sup> + c<sub>2</sub>te<sup>'+r+'t</sup>'
+    }
+    result.innerHTML = answer;
+    result.innerHTML += '<style>#result {padding-bottom: 100px;}</style>'
+  }
+</script>
+</html>

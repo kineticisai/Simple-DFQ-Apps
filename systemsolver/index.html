@@ -1,0 +1,96 @@
+<html>
+<head>
+  <title>DiffEQ Solve</title>
+  <link rel="stylesheet" type="text/css" href="mainstyle.css">
+</head>
+<div id="header">
+  <h1>DiffEQ Solve</h1>
+  <p>Tools for Change</p>
+</div>
+
+<h2>System Solver</h2>
+
+<p>Enter the coefficients for the coefficient matrix below. Currently does not support repeated eigenvalues.</p>
+
+<form>
+  <p>
+  A =
+    <input type="text" id="n1"><input type="text" id="n2">
+    <br /> &emsp; &nbsp;
+    <input type="text" id="n3"><input type="text" id="n4">
+    <br />
+    <input type="button" id="but" value="submit">
+  </p>
+</form>
+
+<div id="result"></div>
+
+<script>
+  main();
+  //get element function
+  function getElem(id){
+    return document.getElementById(id);
+  }
+  //main
+  function main(){
+    let button = getElem('but');
+    button.onclick = solve;
+  }
+  //solve function
+  function solve(){
+    console.log("sum")
+    //get matrix
+    let n1 = Number(getElem('n1').value);
+    let n2 = Number(getElem('n2').value);
+    let n3 = Number(getElem('n3').value);
+    let n4 = Number(getElem('n4').value);
+    //get determinant coefficents
+    let b1 = -(n1 + n4)
+    let c1 = (n1 * n4)-(n2 * n3)
+    //check status of determinant
+    if((Math.pow(b1,2)-4*c1) > 0){
+      console.log("worked")
+      function quad(b,c){
+        let d = Math.sqrt(Math.pow(b,2) - 4*c)
+	      return [((-b + d)/(2)),((-b - d)/(2))]
+      }
+      let e = quad(b1, c1)
+      let r1 = e[0]
+      let r2 = e[1]
+      let p = ((n1 - r1) + n3)/((r1 - n4) - n2)
+      let q = ((n1 - r2) +n3)/((r2 - n4) - n2)
+      console.log(p,q)
+      let result = getElem('result');
+      let answer = '<p>The values of r for the determinant are '+p+' and '+q+'<br>'
+      answer += 'The eigenvectors are ( 1, '+p+') and ( 1, '+q+').<br><br>'
+      answer += 'The solution is:<br>'
+      answer += '<b>x</b> = c<sub>1</sub>( 1, '+p+')e<sup>'+r1+'t</sup> + c<sub>2</sub>( 1, '+q+')e<sup>'+r2+'t</sup></p>'
+      result.innerHTML = answer
+    } else if ((Math.pow(b1,2)-4*c1) < 0){
+      console.log("worked")
+      function quad(b,c){
+        return [(-b/(2)),((Math.sqrt(Math.abs(Math.pow(b,2) - 4*c)))/(2))]
+      }
+      let e = quad(b1, c1)
+      let u = e[0]
+      let b = e[1]
+      let denom = Math.pow((u-n4-n2),2) + Math.pow(b,2)
+      let re = (n1*u - n1*n4 - n1*n2 - u*u + u*n4 + u*n2 + n3*u - n3*n4 - n3*n2 -b*b)/denom
+      let im = Math.abs(b*(n2 + n4 - n1 - n3)/denom)
+      let result = getElem('result');
+      let answer = '<p>The values of r for the determinant are '+u+' + '+b+'i and '+u+' - '+b+'i<br>'
+      answer += "The eigenvectors are ( 1 , "+re+" + "+im+" i) and ( 1 , "+re+" - "+im+" i)<br><br>"
+      answer += 'The solution is:<br>'
+      answer += '<b>x</b> = c<sub>1</sub>( 1 , '+re+' + '+im+' i)e<sup>('+u+' + '+b+'i)t</sup> + '
+      answer += ' c<sub>2</sub>( 1 , '+re+' - '+im+' i)e<sup>('+u+' - '+b+'i)t</sup></p>'
+      result.innerHTML = answer
+    } else {
+      let result = getElem('result');
+      result.innerHTML = 'Sorry, the result includes a repeated Eigenvalue!'
+    }
+    result.innerHTML += '<style>#result {padding-bottom: 100px;}</style>'
+  }
+
+</script>
+
+</html>
